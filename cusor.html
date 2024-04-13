@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Cursor with Center Circle</title>
+    <style>
+        /* Hide the system cursor */
+        html,
+        body {
+            cursor: none !important;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /* Style for custom cursor */
+        .cursor {
+            z-index: 1;
+            width: 15vw;
+            height: 15vw;
+            background-color: rgb(255, 98, 0);
+            filter: blur(70px);
+            color: rgba(0, 0, 0, 0);
+            border-radius: 49%;
+            display: block;
+            /* Change display property to block */
+            position: fixed;
+            top: -7.5vw;
+            bottom: 0%;
+            left: -7.5vw;
+            right: 0%;
+            overflow: visible;
+        }
+
+        /* Style for center circle */
+        .center-circle {
+            width: 6px;
+            height: 6px;
+            border: 2px solid rgb(36, 20, 4);
+            border-radius: 50%;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            /* Ensure it's above the main cursor */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom cursor element -->
+    <div class="cursor"></div>
+
+    <!-- Center circle element -->
+    <div class="center-circle"></div>
+
+    <!-- JavaScript for custom cursor positioning -->
+    <script>
+        // Function to set cursor position
+        function setCursorPosition(x, y) {
+            const cursor = document.querySelector('.cursor');
+            const cursorSize = parseInt(window.getComputedStyle(cursor).getPropertyValue('width'));
+            cursor.style.top = (y - cursorSize / 2) + 'px';
+            cursor.style.left = (x - cursorSize / 2) + 'px';
+        }
+
+        // Function to set center circle position
+        function setCenterCirclePosition(x, y) {
+            const centerCircle = document.querySelector('.center-circle');
+            centerCircle.style.top = (y - 3) + 'px'; // Adjust for centering
+            centerCircle.style.left = (x - 3) + 'px'; // Adjust for centering
+        }
+
+        // JavaScript to make the cursor follow the mouse
+        document.addEventListener('mousemove', function (e) {
+            // Set center circle position with a slight delay
+            setCenterCirclePosition(e.clientX, e.clientY);
+            // Set cursor position after a short delay
+            setTimeout(function () {
+                setCursorPosition(e.clientX, e.clientY);
+            }, 50); // Adjust the delay time as needed
+            // Set cursor position after a longer delay
+            setTimeout(function () {
+                setCursorPosition(e.clientX, e.clientY);
+            }, 100); // Increased delay time (100 milliseconds)
+        });
+    </script>
+</body>
+
+</html>
